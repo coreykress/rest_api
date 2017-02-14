@@ -7,7 +7,7 @@ AppBundle\Entity\Place:
             - Type: string
         address:
             - NotBlank: ~
-            - Type: string
+            - Type: stringO
 
 AppBundle\Entity\User :
     constraints:
@@ -22,3 +22,15 @@ AppBundle\Entity\User :
         email:
             - NotBlank:  ~
             - Email:  ~
+
+AppBundle\Entity\Price:
+    properties:
+        type:
+            - NotNull: ~
+            - Choice:
+                choices: [less_than_12, for_all]
+        value:
+            - NotNull: ~
+            - Type: numeric
+            - GreaterthanOrEqual:
+                value: 0
