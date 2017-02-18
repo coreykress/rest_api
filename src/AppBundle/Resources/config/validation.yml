@@ -32,5 +32,5 @@ AppBundle\Entity\Price:
         value:
             - NotNull: ~
             - Type: numeric
-            - GreaterthanOrEqual:
+            - GreaterThanOrEqual:
                 value: 0
