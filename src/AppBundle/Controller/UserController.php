@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Place;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +38,7 @@ class UserController extends Controller
             ->find($request->get('id'));
 
         if (empty($user)) {
-            return View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+            return $this->userNotFound();
         }
 
         return $user;
@@ -89,7 +90,7 @@ class UserController extends Controller
             ->find($request->get('id'));
 
         if (empty($user)) {
-            return View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+            return $this->userNotFound();
         }
 
         $form = $this->createForm(UserType::class, $user);
@@ -120,5 +121,41 @@ class UserController extends Controller
     public function patchUsersAction(Request $request)
     {
         $this->updateUser($request, false);
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"place"})
+     * @Rest\Get("/users/{id}/suggestions")
+     */
+    public function getUserSuggestionsAction(Request $request)
+    {
+        /* @var $user User */
+        $user = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:User')
+            ->find($request->get('id'));
+
+        if (empty($user)) {
+            return $this->userNotFound();
+        }
+
+        $suggestions = [];
+
+        $places = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Place')
+            ->findAll();
+
+        /** @var Place $place */
+        foreach ($places as $place) {
+            if ($user->preferencesMatch($place->getThemes())) {
+                $suggestions[] = $place;
+            }
+        }
+
+        return $suggestions;
+    }
+
+    private function userNotFound()
+    {
+        return View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
     }
 }

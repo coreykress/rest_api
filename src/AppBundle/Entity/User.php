@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    const MATCH_VALUE_THRESHOLD = 25;
+
     /**
      * @var int
      *
@@ -44,6 +47,31 @@ class User
      */
     protected $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Preference", mappedBy="user")
+     * @var Preference[]
+     */
+    protected $preferences;
+
+    public function __construct()
+    {
+        $this->preferences = new ArrayCollection();
+    }
+
+    public function preferencesMatch($themes)
+    {
+        $matchValue = 0;
+        foreach ($this->preferences as $preference) {
+            /** @var Theme $theme */
+            foreach ($themes as $theme) {
+                if ($preference->match($theme)) {
+                    $matchValue += $preference->getValue() * $theme->getValue();
+                }
+            }
+        }
+
+        return $matchValue >= self::MATCH_VALUE_THRESHOLD;
+    }
 
     /**
      * Get id
@@ -125,6 +153,24 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @return Preference[]
+     */
+    public function getPreferences()
+    {
+        return $this->preferences;
+    }
+
+    /**
+     * @param Preference[] $preferences
+     * @return User
+     */
+    public function setPreferences($preferences)
+    {
+        $this->preferences = $preferences;
+        return $this;
     }
 }
 

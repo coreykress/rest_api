@@ -40,6 +40,12 @@ class Preference
      * @var User
      */
     protected $user;
+
+    public function match(Theme $theme)
+    {
+        return $this->name === $theme->getName();
+    }
+
     /**
      * Get id
      *
@@ -49,7 +55,6 @@ class Preference
     {
         return $this->id;
     }
-
 
     /**
      * Set name
