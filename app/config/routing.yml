@@ -14,9 +14,9 @@ prices:
     type: rest
     resource: AppBundle\Controller\PriceController
 
-themes:
-    type: rest
-    resource: "@AppBundle\Controller\ThemeController"
+categories:
+    type:     rest
+    resource: AppBundle\Controller\CategoryController
 
 preferences:
     type:  rest

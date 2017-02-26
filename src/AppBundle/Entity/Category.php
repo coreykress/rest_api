@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Theme
+ * Category
  *
- * @ORM\Table(name="theme")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ThemeRepository")
+ * @ORM\Table(name="category")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
-class Theme
+class Category
 {
     /**
      * @var int
@@ -19,7 +19,7 @@ class Theme
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -36,8 +36,9 @@ class Theme
     protected $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Place", inversedBy="themes")
      * @var Place
+     *
+     * @ORM\ManyToOne(targetEntity="Place", inversedBy="categories")
      */
     protected $place;
 
@@ -56,7 +57,7 @@ class Theme
      *
      * @param string $name
      *
-     * @return Theme
+     * @return Category
      */
     public function setName($name)
     {
@@ -80,7 +81,7 @@ class Theme
      *
      * @param integer $value
      *
-     * @return Theme
+     * @return Category
      */
     public function setValue($value)
     {
@@ -109,7 +110,7 @@ class Theme
 
     /**
      * @param Place $place
-     * @return Theme
+     * @return Category
      */
     public function setPlace($place)
     {

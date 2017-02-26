@@ -35,7 +35,7 @@ AppBundle\Entity\Price:
             - GreaterThanOrEqual:
                 value: 0
 
-AppBundle\Entity\Theme:
+AppBundle\Entity\Category:
     properties:
         name:
             - NotNull: ~

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ThemeType extends AbstractType
+class CategoryType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class ThemeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Theme',
+            'data_class' => 'AppBundle\Entity\Category',
             'csrf_protection' => false,
         ));
     }
@@ -32,7 +32,7 @@ class ThemeType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_theme';
+        return 'appbundle_category';
     }
 
 
