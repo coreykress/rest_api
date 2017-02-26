@@ -41,9 +41,9 @@ class Preference
      */
     protected $user;
 
-    public function match(Theme $theme)
+    public function match(Category $category)
     {
-        return $this->name === $theme->getName();
+        return $this->name === $category->getName();
     }
 
     /**

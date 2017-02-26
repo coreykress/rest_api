@@ -14,7 +14,7 @@ use AppBundle\Entity\User;
 class UserController extends Controller
 {
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users")
      */
     public function getUsersAction(Request $request)
@@ -27,7 +27,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users/{id}")
      */
     public function getUserAction(Request $request)
@@ -45,7 +45,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
      * @Rest\Post("/users")
      */
     public function postUsersAction(Request $request)
@@ -66,7 +66,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT, serializerGroups={"user"})
      * @Rest\Delete("/users/{id}")
      */
     public function removeUsersAction(Request $request)
@@ -106,7 +106,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Put("/users/{id}")
      */
     public function updateUsersAction(Request $request)
@@ -115,7 +115,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Patch("/users/{id}")
      */
     public function patchUsersAction(Request $request)
@@ -146,7 +146,7 @@ class UserController extends Controller
 
         /** @var Place $place */
         foreach ($places as $place) {
-            if ($user->preferencesMatch($place->getThemes())) {
+            if ($user->preferencesMatch($place->getCategories())) {
                 $suggestions[] = $place;
             }
         }

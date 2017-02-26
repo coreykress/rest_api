@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\PreferenceType;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,10 +39,10 @@ class PreferenceController extends Controller
      */
     public function postPreferencesAction(Request $request)
     {
+        /* @var $user User */
         $user = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:User')
             ->find($request->get('id'));
-        /* @var $user User */
 
         if (empty($user)) {
             return $this->userNotFound();
@@ -64,6 +66,6 @@ class PreferenceController extends Controller
 
     private function userNotFound()
     {
-        return \FOS\RestBundle\View\View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        return View::create(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
     }
 }

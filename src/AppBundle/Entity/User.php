@@ -58,14 +58,14 @@ class User
         $this->preferences = new ArrayCollection();
     }
 
-    public function preferencesMatch($themes)
+    public function preferencesMatch($categories)
     {
         $matchValue = 0;
         foreach ($this->preferences as $preference) {
-            /** @var Theme $theme */
-            foreach ($themes as $theme) {
-                if ($preference->match($theme)) {
-                    $matchValue += $preference->getValue() * $theme->getValue();
+            /** @var Category $category */
+            foreach ($categories as $category) {
+                if ($preference->match($category)) {
+                    $matchValue += $preference->getValue() * $category->getValue();
                 }
             }
         }
@@ -170,7 +170,6 @@ class User
     public function setPreferences($preferences)
     {
         $this->preferences = $preferences;
-        return $this;
     }
 }
 
